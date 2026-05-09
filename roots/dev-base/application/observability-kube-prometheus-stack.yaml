@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: observability-kube-prometheus-stack
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: platform
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: 69.8.2
+    helm:
+      releaseName: kube-prometheus-stack
+      valueFiles:
+        - $values/platform/observability/kube-prometheus-stack/base/values.yaml
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      targetRevision: 69.8.2
+      helm:
+        releaseName: kube-prometheus-stack
+        valueFiles:
+          - $values/platform/observability/kube-prometheus-stack/base/values.yaml
+    - repoURL: https://github.com/Adman-Corp/admancorp-platform-manifest.git
+      targetRevision: main
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: observability
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - SkipDryRunOnMissingResource=true

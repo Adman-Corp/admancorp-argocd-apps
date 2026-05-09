@@ -9,6 +9,8 @@ spec:
   description: Deploys mirrored dev platform manifests from admancorp-platform-manifest.
   sourceRepos:
     - https://github.com/Adman-Corp/admancorp-platform-manifest.git
+    - https://prometheus-community.github.io/helm-charts
+    - https://grafana.github.io/helm-charts
   destinations:
     - namespace: '*'
       server: https://kubernetes.default.svc
