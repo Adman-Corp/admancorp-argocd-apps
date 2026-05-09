@@ -5,3 +5,4 @@ resources:
   - application/platform-dev.yaml
   - application/observability-kube-prometheus-stack.yaml
   - application/observability-loki.yaml
+  - application/observability-alloy.yaml

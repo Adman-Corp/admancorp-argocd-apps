@@ -66,6 +66,11 @@ The shared Argo CD desired state lives in `roots/dev-base`. The cloud-specific r
 
 Helm-based observability components are deployed as standalone Argo CD applications from `roots/dev-base/application/` and reuse values stored in `admancorp-platform-manifest`.
 
+Current observability apps are:
+- `observability-kube-prometheus-stack`
+- `observability-loki`
+- `observability-alloy`
+
 Both targets deploy to the in-cluster destination `https://kubernetes.default.svc`, so each Argo CD instance manages its own cluster.
 
 ## Notes
