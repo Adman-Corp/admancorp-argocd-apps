@@ -11,6 +11,8 @@ spec:
     repoURL: https://github.com/Adman-Corp/admancorp-platform-manifest.git
     targetRevision: main
     path: environments/dev/base
+    kustomize:
+      enableHelm: true
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:
