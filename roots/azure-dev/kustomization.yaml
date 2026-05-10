@@ -9,3 +9,9 @@ patches:
       version: v1alpha1
       kind: Application
       name: platform-dev
+  - path: patches/demo-app.yaml
+    target:
+      group: argoproj.io
+      version: v1alpha1
+      kind: Application
+      name: demo-app
