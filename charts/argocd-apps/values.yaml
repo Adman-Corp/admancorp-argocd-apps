@@ -36,7 +36,6 @@ applications:
         selfHeal: true
       syncOptions:
         - CreateNamespace=true
-        - Replace=true
     extraHelmValueFiles: []
 
   platform:
@@ -58,4 +57,4 @@ applications:
         selfHeal: true
       syncOptions:
         - CreateNamespace=true
-        - Replace=true
+        - ServerSideApply=true
