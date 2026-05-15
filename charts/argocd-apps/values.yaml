@@ -36,6 +36,7 @@ applications:
         selfHeal: true
       syncOptions:
         - CreateNamespace=true
+        - Replace=true
     extraHelmValueFiles: []
 
   platform:
@@ -51,3 +52,10 @@ applications:
     destination:
       server: https://kubernetes.default.svc
       namespace: argocd
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+        - CreateNamespace=true
+        - Replace=true
