@@ -1,17 +1,8 @@
 applications:
   platform:
-    name: platform-gcp-dev
-    project: platform
-    source:
-      repoURL: https://github.com/Adman-Corp/admancorp-platform-manifest.git
-      targetRevision: main
-      path: charts/admancorp-platform
-      helm:
-        valueFiles:
-          - values-dev-gcp.yaml
-    destination:
-      server: https://kubernetes.default.svc
-      namespace: argocd
+    extraHelmValueFiles:
+      - values-gcp-dev.yaml
+
   demo:
     extraHelmValueFiles:
       - ../../environments/gcp-values.yaml

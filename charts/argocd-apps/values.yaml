@@ -39,3 +39,17 @@ applications:
       syncOptions:
         - CreateNamespace=true
     extraHelmValueFiles: []
+
+  platform:
+    name: platform
+    project: platform
+    source:
+      repoURL: https://github.com/Adman-Corp/admancorp-platform-manifest.git
+      targetRevision: main
+      path: charts/admancorp-platform
+      helm:
+        valueFiles:
+          - values.yaml
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: argocd
