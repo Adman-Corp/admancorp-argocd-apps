@@ -1,7 +1,7 @@
 applications:
   platform:
     extraHelmValueFiles:
-      - values-azure-dev.yaml
+      - values-dev-azure.yaml
 
   demo:
     extraHelmValueFiles:

@@ -1,7 +1,7 @@
 applications:
   platform:
     extraHelmValueFiles:
-      - values-gcp-dev.yaml
+      - values-dev-gcp.yaml
 
   demo:
     extraHelmValueFiles:
