@@ -9,6 +9,9 @@ applications:
       helm:
         valueFiles:
           - values-dev-azure.yaml
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: argocd
   demo:
     extraHelmValueFiles:
       - ../../environments/azure-values.yaml
