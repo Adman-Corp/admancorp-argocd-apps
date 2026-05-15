@@ -1,0 +1,63 @@
+{{- range $key, $app := .Values.applications }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ $app.name }}
+  namespace: argocd
+  {{- if $app.syncWave }}
+  annotations:
+    argocd.argoproj.io/sync-wave: {{ quote $app.syncWave }}
+  {{- end }}
+spec:
+  project: {{ $app.project }}
+  {{- if hasKey $app "sources" }}
+  {{- with index $app.sources 0 }}
+  source:
+    repoURL: {{ .repoURL }}
+    {{- if .chart }}
+    chart: {{ .chart }}
+    {{- end }}
+    targetRevision: {{ .targetRevision }}
+    {{- if .helm }}
+    helm:
+      {{- toYaml .helm | nindent 6 }}
+    {{- end }}
+  {{- end }}
+  sources:
+    {{- range $app.sources }}
+    - repoURL: {{ .repoURL }}
+      {{- if .chart }}
+      chart: {{ .chart }}
+      {{- end }}
+      targetRevision: {{ .targetRevision }}
+      {{- if .helm }}
+      helm:
+        {{- toYaml .helm | nindent 8 }}
+      {{- end }}
+      {{- if .ref }}
+      ref: {{ .ref }}
+      {{- end }}
+    {{- end }}
+  {{- else }}
+  source:
+    repoURL: {{ $app.source.repoURL }}
+    targetRevision: {{ $app.source.targetRevision }}
+    path: {{ $app.source.path }}
+    {{- if $app.source.helm }}
+    helm:
+      valueFiles:
+        {{- range $app.source.helm.valueFiles }}
+        - {{ . }}
+        {{- end }}
+        {{- range $app.extraHelmValueFiles }}
+        - {{ . }}
+        {{- end }}
+    {{- end }}
+  {{- end }}
+  {{- include "argocd-apps.destination" $app | nindent 2 }}
+  {{- if $app.syncPolicy }}
+  syncPolicy:
+    {{- toYaml $app.syncPolicy | nindent 4 }}
+  {{- end }}
+{{- end }}

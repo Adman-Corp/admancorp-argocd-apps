@@ -1,14 +1,18 @@
+{{- range $key, $project := .Values.projects }}
+---
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: applications
-  namespace: argocd
+  name: {{ $project.name }}
+  namespace: {{ $project.namespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "0"
 spec:
-  description: Deploys AdmanCorp application Helm charts from admancorp-applications-manifests.
+  description: {{ $project.description }}
   sourceRepos:
-    - https://github.com/Adman-Corp/admancorp-applications-manifests.git
+    {{- range $project.sourceRepos }}
+    - {{ . }}
+    {{- end }}
   destinations:
     - namespace: '*'
       server: https://kubernetes.default.svc
@@ -18,3 +22,4 @@ spec:
   namespaceResourceWhitelist:
     - group: '*'
       kind: '*'
+{{- end }}

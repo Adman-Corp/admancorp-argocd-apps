@@ -1,6 +1,0 @@
-- op: replace
-  path: /metadata/name
-  value: platform-gcp-dev
-- op: replace
-  path: /spec/source/path
-  value: environments/dev/gcp

@@ -1,0 +1,14 @@
+applications:
+  platform:
+    name: platform-azure-dev
+    project: platform
+    source:
+      repoURL: https://github.com/Adman-Corp/admancorp-platform-manifest.git
+      targetRevision: main
+      path: charts/admancorp-platform
+      helm:
+        valueFiles:
+          - values-dev-azure.yaml
+  demo:
+    extraHelmValueFiles:
+      - ../../environments/azure-values.yaml

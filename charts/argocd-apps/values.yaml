@@ -1,0 +1,41 @@
+projects:
+  platform:
+    name: platform
+    namespace: argocd
+    description: Deploys platform Helm charts from admancorp-platform-manifest.
+    sourceRepos:
+      - https://github.com/Adman-Corp/admancorp-platform-manifest.git
+      - https://prometheus-community.github.io/helm-charts
+      - https://grafana.github.io/helm-charts
+      - https://charts.jetstack.io
+      - https://charts.external-secrets.io
+      - https://kyverno.github.io/kyverno
+      - oci://docker.io/envoyproxy/gateway-helm
+  applications:
+    name: applications
+    namespace: argocd
+    description: Deploys AdmanCorp application Helm charts from admancorp-applications-manifests.
+    sourceRepos:
+      - https://github.com/Adman-Corp/admancorp-applications-manifests.git
+
+applications:
+  demo:
+    name: demo-app
+    project: applications
+    source:
+      repoURL: https://github.com/Adman-Corp/admancorp-applications-manifests.git
+      targetRevision: main
+      path: charts/demo-app
+      helm:
+        valueFiles:
+          - values.yaml
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: default
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+        - CreateNamespace=true
+    extraHelmValueFiles: []
